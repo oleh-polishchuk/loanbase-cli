@@ -1,0 +1,21 @@
+{
+  "name": "loanbase-cli",
+  "version": "1.0.0",
+  "description": "Loanbase CLI",
+  "main": "index.js",
+  "scripts": {},
+  "author": "oleh.polishchuk.ck@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oleh-polishchuk/loanbase-cli.git"
+  },
+  "bin": {
+    "loanbase": "./index.js",
+    "loanbase-cli": "./index.js"
+  },
+  "dependencies": {
+    "xregexp": "4.2.4",
+    "yargs": "13.2.2"
+  }
+}
