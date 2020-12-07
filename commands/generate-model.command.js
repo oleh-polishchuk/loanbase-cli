@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { decamelize } = require("../common/utils");
 const { execSync } = require('child_process');
 
 const { capitalizeFirstLetter } = require("../common/utils");
@@ -10,7 +11,7 @@ const { interfaceTemplate } = require("../templates/interface.template");
 module.exports.run = (modelName = "", options = {}) => {
     const MODELS_DIR = 'apps/loanbase-backend/src/models';
 
-    const modelDir = path.resolve(MODELS_DIR, modelName);
+    const modelDir = path.resolve(MODELS_DIR, decamelize(modelName));
     if (fs.existsSync(modelDir)) {
         return console.log(`Model ${modelDir} already exists!`);
     } else {
@@ -21,17 +22,17 @@ module.exports.run = (modelName = "", options = {}) => {
     fs.mkdirSync(entitiesDir);
     console.log('entitiesDir', entitiesDir)
 
-    const entityPath = path.resolve(entitiesDir, `${modelName}.entity.ts`);
+    const entityPath = path.resolve(entitiesDir, `${decamelize(modelName)}.entity.ts`);
     fs.writeFileSync(entityPath, entityTemplate({
-        modelName: capitalizeFirstLetter(modelName)
+        modelName: modelName
     }), { flag: 'wx' });
 
     const interfacesDir = path.resolve(modelDir, 'interfaces');
     fs.mkdirSync(interfacesDir);
 
-    const interfacePath = path.resolve(interfacesDir, `${modelName}.interface.ts`);
+    const interfacePath = path.resolve(interfacesDir, `${decamelize(modelName)}.interface.ts`);
     fs.writeFileSync(interfacePath, interfaceTemplate({
-        modelName: capitalizeFirstLetter(modelName)
+        modelName: modelName
     }), { flag: 'wx' });
 
     execSync(`git add .`);
